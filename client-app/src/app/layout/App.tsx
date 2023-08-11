@@ -1,35 +1,24 @@
 import 'semantic-ui-css/semantic.min.css'
-import React, { Fragment, useEffect, useState } from 'react';
-import {  Container } from 'semantic-ui-react';
-import { Activity } from '../models/activity'
+import React, { Fragment } from 'react';
+import { Container } from 'semantic-ui-react';
 import NavBar from './NavBar';
-import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
-import agent from '../api/agent';
-import LoadingComponent from './LoadingComponents';
-import { useStore } from '../stores/store';
 import { observer } from 'mobx-react-lite';
+import { Outlet, useLocation } from 'react-router-dom';
+import HomePage from '../home/HomePage';
 
 function App() {
-  const { activityStore } = useStore();
-
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [submitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore])
-
-
-
-  if (activityStore.loadingInitial) return <LoadingComponent content='Loading app' />
+  const location = useLocation();
 
   return (
     <Fragment>
-      <NavBar  />
-      <Container style={{ marginTop: '7em' }}>
-        <ActivityDashboard
-        />
-      </Container>
+      {location.pathname === '/' ? <HomePage/> : (
+      <Fragment>
+        <NavBar />
+        <Container style={{ marginTop: '7em' }}>
+          <Outlet />
+        </Container>
+      </Fragment>
+      )}
     </Fragment>
   );
 }
