@@ -10,9 +10,9 @@ interface Props {
 
 export default function ActivityListItem({ activity }: Props) {
 
+    /* Delete Activity
     const { activityStore } = useStore();
 
-    /* Delete Activity
     const { deleteActivity, loading } = activityStore;
 
     const [target, setTarget] = useState('');
