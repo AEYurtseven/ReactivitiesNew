@@ -6,18 +6,21 @@ namespace Persistence
 {
     public class DataContext : IdentityDbContext<AppUser>
     {
-       public DataContext(DbContextOptions<DataContext> options) : base(options)
-       {
-       }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
 
-       public DbSet<Activity> Activities { get; set; }
+        public DbSet<Activity> Activities { get; set; }
 
-        public DbSet<ActivityAttendee> ActivityAttendees {get;set;}
+        public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder){
+        public DbSet<Photo> Photos { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
             base.OnModelCreating(builder);
 
-            builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new {aa.AppUserId, aa.ActivityId}));
+            builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ActivityId }));
 
             builder.Entity<ActivityAttendee>()
             .HasOne(u => u.AppUser)
@@ -31,6 +34,6 @@ namespace Persistence
             .WithMany(a => a.Attendees)
             .HasForeignKey(aa => aa.ActivityId);
         }
-       
+
     }
 }

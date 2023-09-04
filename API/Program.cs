@@ -3,9 +3,12 @@ using API.Middleware;
 using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
+using Application.Photos;
 using Domain;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -38,12 +41,15 @@ builder.Services.AddCors(opt =>
         policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
     });
 });
+
 builder.Services.AddMediatR(typeof(List.Handler));
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<Create>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+builder.Services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddIdentityServices(builder.Configuration);
 
 
