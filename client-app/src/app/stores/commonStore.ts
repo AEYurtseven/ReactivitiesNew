@@ -4,13 +4,13 @@ import { ServerError } from "../models/serverError";
 export default class CommonStore {
     error: ServerError | null = null;
     token: string | null = localStorage.getItem('jwt');
-    appLoaded = false; 
+    appLoaded = false;
     constructor() {
         makeAutoObservable(this);
         reaction(
-            () => this.token, 
+            () => this.token,
             token => {
-                if(token) {
+                if (token) {
                     localStorage.setItem('jwt', token);
                 } else {
                     localStorage.removeItem('jwt');
@@ -19,7 +19,7 @@ export default class CommonStore {
         )
     }
 
-setServerError(error: ServerError){
+    setServerError(error: ServerError) {
         this.error = error;
     }
 
