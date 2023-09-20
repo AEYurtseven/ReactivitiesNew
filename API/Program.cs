@@ -1,5 +1,6 @@
 using API.Extensions;
 using API.Middleware;
+using API.SignalR;
 using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
@@ -38,19 +39,13 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+
+        policy.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:3000");
     });
 });
 
-builder.Services.AddMediatR(typeof(List.Handler));
-builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<Create>();
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IUserAccessor, UserAccessor>();
-builder.Services.AddScoped<IPhotoAccessor, PhotoAccessor>();
-builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
-builder.Services.AddIdentityServices(builder.Configuration);
+ServiceExtentions.AddServices(builder.Services,builder.Configuration);
+IdentityServiceExtensions.AddIdentityServices(builder.Services,builder.Configuration);
 
 
 var app = builder.Build();
@@ -70,6 +65,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chat");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
