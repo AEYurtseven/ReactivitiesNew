@@ -6,6 +6,7 @@ import { store } from '../stores/store';
 import { User, UserFromValues } from '../models/user';
 import { Photo, Profile } from '../models/profiles';
 import { PaginatedResult } from '../models/pagination';
+import { UserActivity } from '../models/UserActivity';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -97,7 +98,9 @@ const Profiles = {
     updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles/`, profile),
     updateFollowing: (username:string) => requests.post(`/follow/${username}`, {}),
     listFollwings: (username: string, predicate: string) => 
-        requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`)
+        requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+    listActivities: (username: string, predicate: string) =>
+        requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
 }
 
 const Account = {
