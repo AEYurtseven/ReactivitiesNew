@@ -23,6 +23,7 @@ export default class UserStore {
             store.modalStore.closeModal();
             router.navigate('/activities');
         } catch (error) {
+            console.log(error);
             throw error;
         }
     }
@@ -35,6 +36,7 @@ export default class UserStore {
             store.modalStore.closeModal();
             router.navigate('/activities');
         } catch (error) {
+            console.log(error);
             throw error;
         }
     }

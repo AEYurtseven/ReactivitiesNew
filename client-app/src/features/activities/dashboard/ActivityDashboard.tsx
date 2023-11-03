@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Grid, Loader } from 'semantic-ui-react';
+import { useEffect, useState } from 'react';
+import { Grid, Loader } from 'semantic-ui-react';
 import ActivityList from './ActivityList';
 import 'semantic-ui-css/semantic.min.css'
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import LoadingComponent from '../../../app/layout/LoadingComponents';
 import ActivityFilters from './ActivityFilters';
 import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';

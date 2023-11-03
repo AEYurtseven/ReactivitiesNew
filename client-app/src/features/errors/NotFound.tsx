@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button, Header, Icon, Search, Segment } from "semantic-ui-react";
+import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
 export default function NotFound() {
     return(

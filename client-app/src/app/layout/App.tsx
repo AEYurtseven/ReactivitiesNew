@@ -14,8 +14,6 @@ import ModalContainer from '../common/modals/ModalContainer';
 function App() {
   const location = useLocation();
   const {commonStore, userStore}= useStore();
-  const {} = useStore();
-
 
   useEffect(() => {
     if(commonStore.token){
